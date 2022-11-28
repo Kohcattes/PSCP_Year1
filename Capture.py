@@ -1,6 +1,6 @@
 import cv2  
 cam_port = 0
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(0) #cv2.VideoCapture(แล้วแต่captureเลือกใช้)
 total, dic_pic = 1, dict()
 while True:
     result, image = camera.read()
