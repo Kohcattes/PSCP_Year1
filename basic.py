@@ -13,7 +13,7 @@ import cv2
 #cv2.destroyWindow()
 body_model = cv2.CascadeClassifier('body_detec.xml')
 #for i in range(1, total):
-img = cv2.imread('photo1.jpg')
+img = cv2.imread('photo1.jpg') #รูปภาพ
 gray_scal = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 human = body_model.detectMultiScale(gray_scal)
 print(human)
