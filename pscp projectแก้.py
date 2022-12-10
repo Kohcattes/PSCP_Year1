@@ -23,9 +23,9 @@ while True:
         img = cv2.imread("photo%d.png" %total)
         gray_scal = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         x, y, w, h = (face_track.detectMultiScale(gray_scal))[0]
-        dic_pic['photo'+str(total)+'.png'] = y
+        dic_pic['photo%02d.png'%total] = y
         total += 1
     if cv2.waitKey(1) & 0x0FF == ord("d"):
         break
 chair = tuple(sorted(dic_pic.items(), key=lambda x:x[1]))
-print(dic_pic)
+print(chair)
