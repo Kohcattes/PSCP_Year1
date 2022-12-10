@@ -1,36 +1,58 @@
 from tkinter import *
-from tkinter import messagebox
+import cv2  
+import customtkinter
 
-root = Tk()
-#root.option_add("*Font", "30")
+root = customtkinter.CTk()
+customtkinter.set_appearance_mode("dark")
 root.title("ทุกระบบจบที่บัง")
 root.geometry('1000x550')
-#root.configure(bg="#B7EAF7")
 
-Label(root, text="Welcome to").pack(padx=10, pady=10)
-Label(root, text="'ทุกระบบจบที่บัง!'").pack(padx=10, pady=10)
+lbl1=customtkinter.CTkLabel(root, text="Welcome to", font=('clearlyu pua', 40)).pack(padx=10, pady=10)
+lbl2=customtkinter.CTkLabel(root, text='" ทุกระบบจบที่บัง! "', font=('fixed', 30)).pack(padx=10, pady=10)
+lbl4=customtkinter.CTkLabel(root, text="|", font=('Helvetica', 30)).pack()
+lbl5=customtkinter.CTkLabel(root, text="|", font=('Helvetica', 30)).pack()
+lbl6=customtkinter.CTkLabel(root, text="\/", font=('Helvetica', 30)).pack()
 def win():
-    win = Tk()
+    win = customtkinter.CTk()
+    customtkinter.set_appearance_mode("dark")
+    win.title('ทุกระบบจบที่บัง')
+    win.option_add("*Font", "Helvetica")
     win.geometry("1000x550")
+    lbl1=customtkinter.CTkLabel(win, text='Number Of Rows                         :').place(x=100, y=35)
+    lbl2=customtkinter.CTkLabel(win, text='Number Of People Per Rows      :').place(x=100, y=75)
+    lbl3=customtkinter.CTkLabel(win, text='classroom seat                            :').place(x=100, y=155)
 
-    Label(win, text="Rows:").grid(row=0)       
-    Label(win, text="Columns:").grid(row=1)
+    t1=customtkinter.CTkEntry(win, placeholder_text="number")
+    t2=customtkinter.CTkEntry(win, placeholder_text="number")
+    t3=customtkinter.CTkEntry(win, placeholder_text="result")
+    t1.place(x=350, y=35)
+    t2.place(x=350, y=75)
+    t3.place(x=350, y=155)
 
-    e1 = Entry(win)
-    e2 = Entry(win)
-    e1.grid(row=0, column=1, padx=10, pady=5)
-    e2.grid(row=1, column=1, padx=10, pady=5)
-
-    def show():
-        print(e1.get())
-        print(e2.get())
-        e1.delete(0, "end")
-        e2.delete(0, "end")
-
-    Button(win, text="Get Info", width=10, command=show).grid(row=3, column=0, sticky= "w", padx=10, pady=5)
-    Button(win, text="Exit", width=10, command=win.quit).grid(row=3, column=1, sticky="e", padx=10, pady=5)
-
+    def add():
+        print(t1.get())
+        print(t2.get())
+        ans = (int(t1.get()))*(int(t2.get()))
+        t3.insert(END, str(ans))
+        
+    def takephoto():
+        cam = cv2.VideoCapture(0)
+        total = 1
+        while True:
+            result, image = cam.read()
+            cv2.imshow("photo", image)
+            if cv2.waitKey(1) & 0x0FF == ord("q"):
+                cv2.imwrite("photo%d.png" %total, image)
+                total += 1
+            if cv2.waitKey(1) & 0x0FF == ord("d"):
+                break
+        cv2.destroyWindow()
+        
+    customtkinter.CTkButton(win, text='Take Photo', width=150, command=takephoto).place(x=650, y=100)
+    customtkinter.CTkButton(win, text='Enter', width=100, command=add).place(x=200, y=120)
     win.mainloop()
 
-Button(root, text="Start!", command=win,).pack()
+button = customtkinter.CTkButton(master=root, text="Start!", command=win)
+button.place(relx=0.5, rely=0.5, anchor=CENTER)
+root.destroy
 root.mainloop()
