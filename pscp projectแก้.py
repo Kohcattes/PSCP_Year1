@@ -4,7 +4,7 @@ from tkinter import *
 
 cam_port = 0
 cam = cv2.VideoCapture(0)
-total, dic_pic = 1, dict()
+dic_pic = dict()
 body_model = cv2.CascadeClassifier('body_detec.xml')
 img = cv2.imread('photo1,jpg')
 gray_scal = cv2.cvtColor(img, cv2.COLOR_BAYER_BG2GRAY)
