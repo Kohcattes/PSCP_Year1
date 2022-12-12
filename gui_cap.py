@@ -22,6 +22,7 @@ lis = []
 dic_pic = dict() #สรุปตอนนี้ให้dictเก็บค่าตำแหน่งyไว้เพื่อดึงมาใช้ในการคำนวนต่อไปให้เร็วขึ้น
 face_track = cv2.CascadeClassifier('face_alt.xml') #เพิ่มส่วนของการหาตำแหน่ง
 
+#ฟังค์ชั่นเปิดกล้อง
 def open_camera():
     _, frame = vid.read()
     opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
@@ -31,17 +32,18 @@ def open_camera():
 
     label_widget.configure(image=photo_image) 
     label_widget.after(10, open_camera)
-    
-def start(i):
+
+#ฟังค์ชั่นการทำงานของโปรเเกรมจับใบหน้า
+def start():
     _, frame = vid.read()
-    cv2.imwrite("photo.png", frame)#กดถ่ายช็อตนึงแล้วเอามาทำงานหาหน้าคนเลย
-    img = cv2.imread("photo%d.png" %i)#ไม่มั่นใจว่าเราจะเสียเวลาขั้นตอนนี้หรือป่าว
+    cv2.imwrite("photo%02d.png" %len(dic_pic), frame)#กดถ่ายช็อตนึงแล้วเอามาทำงานหาหน้าคนเลย
+    img = cv2.imread("photo%02d.png" %len(dic_pic))#ไม่มั่นใจว่าเราจะเสียเวลาขั้นตอนนี้หรือป่าว
     gray_scal = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     y = (face_track.detectMultiScale(gray_scal))[0][1]#ต้องได้แค่หน้าเดียวไม่งั้นได้ตำแหน่งผิดแน่หรือถ้าไม่ได้ตำแหน่งมาก็แตก
-    dic_pic["photo%d.png" %i] = y
+    dic_pic["photo%02d.png" %len(dic_pic)] = y
     chair = tuple(sorted(dic_pic.items(), key=lambda x:x[1]))
-    lis.append(chair)
-    print(lis)
+    print(chair)
+
 
 btn_start = customtkinter.CTkButton(app, text='CAPTURE', command = start)
 btn_start.pack(side=LEFT, anchor=SW)
