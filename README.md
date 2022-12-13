@@ -5,7 +5,7 @@
 #gui_main.py or gui_main_os.py
 #face_alt.xml
 
-#และรบกวนทำการ install \
+#และรบกวนทำการ install module\
 #pip install opencv-python \
 #pip install tk \
 #pip install Pillow \
